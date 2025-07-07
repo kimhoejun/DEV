@@ -1,4 +1,4 @@
-package com.khj.dev.model;
+package com.khj.dev.common.model;
 
 public class ResultModel<T> {
 	

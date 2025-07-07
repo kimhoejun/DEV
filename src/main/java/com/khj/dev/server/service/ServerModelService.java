@@ -1,4 +1,4 @@
-package com.khj.dev.service;
+package com.khj.dev.server.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -6,10 +6,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.khj.dev.model.TestModel;
+import com.khj.dev.common.model.TestModel;
 
 @Service
-public class ModelService {
+public class ServerModelService {
 
 
 	/**
