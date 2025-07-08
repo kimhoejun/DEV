@@ -3,6 +3,9 @@ package com.khj.dev.server.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,13 +23,10 @@ import com.khj.dev.server.service.ServerModelService;
 @RequestMapping("/serverEndpoints")
 public class ServerModelController {
 	
-	private static ServerModelService service;
+	private static Logger logger = LoggerFactory.getLogger(ServerModelController.class);
 	
-	public ServerModelController() {
-		// TODO Auto-generated constructor stub
-		service = new ServerModelService();
-	}
-
+	@Autowired
+	private ServerModelService service;
 	
 	@GetMapping("/models")
 	public ResponseEntity<ResultModel<List<TestModel>>> getAllModels() {
@@ -45,7 +45,7 @@ public class ServerModelController {
 	}
 
 	
-	@GetMapping("models/{loanRqsNo}")
+	@GetMapping("/models/{loanRqsNo}")
 	public ResponseEntity<ResultModel<TestModel>> getSingleModels(@PathVariable("loanRqsNo") String loanRqsNo) {
 		
 		TestModel model = new TestModel();
@@ -68,14 +68,17 @@ public class ServerModelController {
 	@PostMapping("/models/receive")
 	public ResponseEntity<String> receive(@RequestBody TestModel model) {
 		
+		logger.info(">>>>>> server @PostMapping [models/receive] start...");
+		
 		try {
+			
 			StringBuffer buffer = new StringBuffer();
 			buffer.append("receive data -> [loanRqsNo: ").append(model.getLoanRqsNo()).append(", ")
 			.append("custNo:").append(model.getCustNo()).append(", ")
 			.append("loanAmt:").append(model.getLoanAmt()).append(", ")
 			.append("targetYn:").append(model.getTargetYn()).append("]");;
 			
-			System.out.println(buffer.toString());
+			logger.info(">>>>>> server @PostMapping [models/receive] receice data : {}", buffer.toString());
 			
 		} catch(Exception e) {
 			e.getMessage();

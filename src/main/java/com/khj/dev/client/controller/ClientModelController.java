@@ -1,5 +1,7 @@
 package com.khj.dev.client.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,14 +13,10 @@ import com.khj.dev.client.service.ClientModelService;
 @RequestMapping("/client")
 public class ClientModelController {
 
+	private static Logger logger = LoggerFactory.getLogger(ClientModelController.class);
+	
 	@Autowired
-	private static ClientModelService service;
-	
-	public ClientModelController() {
-		// TODO Auto-generated constructor stub
-		service = new ClientModelService();
-	}
-	
+	private ClientModelService service;
 	
 	@GetMapping("/send")
 	public String send() {
@@ -27,9 +25,13 @@ public class ClientModelController {
 		
 		try {
 		
+			logger.info(">>>>>> client GetMapping [send] start...");
 			result = service.jsonToServiceEndpoint();
+			logger.info("<<<<<< client GetMapping [send] result : {}", result);
 			
 		} catch(Exception e) {
+			
+			logger.error("<<<<<< err msg : {}", e.getMessage());
 			
 			StringBuffer buffer = new StringBuffer();
 			buffer.append("Err Send:")
