@@ -43,8 +43,6 @@ public class ServerModelService {
 	 * @return model
 	 */
 	public TestModel getModel(String loanRqsNo) {
-
-		TestModel resultModel = new TestModel();
 		
 		try {
 			
@@ -56,14 +54,14 @@ public class ServerModelService {
 			for(TestModel model : listTestModel) {
 				
 				if( loanRqsNo.equals(model.getLoanRqsNo()) ) {
-					resultModel = model;
+					return model;
 				}
 			}
 		} catch(Exception e) {
 			e.getMessage();
 		}
 		
-		return resultModel;
+		return null;
 	}
 	
 }

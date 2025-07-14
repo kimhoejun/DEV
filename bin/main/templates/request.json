@@ -1,6 +1,6 @@
 {
-	"loanRqsNo": "202507070001",
+	"loanRqsNo": "202507010001",
 	"custNo": "223002",
-	"loanAmt": 100000000,
-	"targetYn": true
+	"loanAmt": 800000000,
+	"targetYn": false
 }

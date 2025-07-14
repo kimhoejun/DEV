@@ -35,5 +35,11 @@ public class TestModel {
 	public void setCustNo(String custNo) { this.custNo = custNo; }
 	public void setLoanAmt(BigDecimal loanAmt) { this.loanAmt = loanAmt; }
 	public void setTargetYn(Boolean targetYn) { this.targetYn = targetYn; }
+
+	@Override
+	public String toString() {
+		return "TestModel [loanRqsNo=" + loanRqsNo + ", custNo=" + custNo + ", loanAmt=" + loanAmt + ", targetYn="
+				+ targetYn + "]";
+	}
 	
 }

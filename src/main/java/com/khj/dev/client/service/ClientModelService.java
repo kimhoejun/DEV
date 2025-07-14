@@ -15,8 +15,8 @@ public class ClientModelService {
 
 	private static Logger logger = LoggerFactory.getLogger(ClientModelService.class);
 	
-	private static RestTemplate restTemplate;
-	private static ObjectMapper objectMapper;
+	private static RestTemplate restTemplate = new RestTemplate();
+	private ObjectMapper objectMapper = new ObjectMapper();
 	
 	public String jsonToServiceEndpoint() {
 		
@@ -25,24 +25,28 @@ public class ClientModelService {
 		try {
 		
 			// Read json file
-			TestModel model = objectMapper.readValue(new ClassPathResource("request.json").getFile(), TestModel.class);
-			logger.info(">>>>>> client service model: ", model);
+			TestModel model = objectMapper.readValue(new ClassPathResource("templates/request.json").getInputStream(), TestModel.class);
+			logger.info(">>>>>> client service model.getLoanRqsNo : {}", model.getLoanRqsNo());
 			
 			// request header
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			
 			// Header + reqBody
-			HttpEntity<TestModel> reqHttpEntity = new HttpEntity<TestModel>(model, headers);
+//			HttpEntity<String> reqHttpEntity = new HttpEntity<String>(model.getLoanRqsNo(), headers);
 			
-			String url = "http://localhost:8080/serverEndpoints/models/receive";
-			ResponseEntity<String> response = restTemplate.postForEntity(url, reqHttpEntity, String.class);
-			logger.info("<<<<<< client service response: ", response);
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("http://localhost:8080/serverEndpoints/models/").append(model.getLoanRqsNo());
+			
+			String url = buffer.toString();
+			ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+			logger.info("<<<<<< client service response: {}", response.getBody());
 			
 			result = response.getBody();
 			
 		} catch(Exception e) {
 			logger.error("err msg : {}", e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return result;

@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,12 +50,15 @@ public class ServerModelController {
 		
 		try {
 			
+			logger.info(">>>>>> server loanRqsNo search controller start...");
+			
 			if(service.getModel(loanRqsNo) == null) {
 				return ResponseEntity.notFound().build();
 			} else {
 				model = service.getModel(loanRqsNo);
 			}
 			
+			logger.info("<<<<<< server loanRqsNo search controller end...");
 		} catch(Exception e) {
 			e.getMessage();
 		}
@@ -65,26 +66,26 @@ public class ServerModelController {
 		return ResponseEntity.ok().body(new ResultModel<>(model, HttpStatus.OK.value()));
 	}
 	
-	@PostMapping("/models/receive")
-	public ResponseEntity<String> receive(@RequestBody TestModel model) {
-		
-		logger.info(">>>>>> server @PostMapping [models/receive] start...");
-		
-		try {
-			
-			StringBuffer buffer = new StringBuffer();
-			buffer.append("receive data -> [loanRqsNo: ").append(model.getLoanRqsNo()).append(", ")
-			.append("custNo:").append(model.getCustNo()).append(", ")
-			.append("loanAmt:").append(model.getLoanAmt()).append(", ")
-			.append("targetYn:").append(model.getTargetYn()).append("]");;
-			
-			logger.info(">>>>>> server @PostMapping [models/receive] receice data : {}", buffer.toString());
-			
-		} catch(Exception e) {
-			e.getMessage();
-		}
-		
-		return ResponseEntity.ok("Server Receive Succ!!");
-	}
+//	@PostMapping("/models/receive")
+//	public ResponseEntity<String> receive(@RequestBody TestModel model) {
+//		
+//		logger.info(">>>>>> server @PostMapping [models/receive] start...");
+//		
+//		try {
+//			
+//			StringBuffer buffer = new StringBuffer();
+//			buffer.append("receive data -> [loanRqsNo: ").append(model.getLoanRqsNo()).append(", ")
+//			.append("custNo:").append(model.getCustNo()).append(", ")
+//			.append("loanAmt:").append(model.getLoanAmt()).append(", ")
+//			.append("targetYn:").append(model.getTargetYn()).append("]");;
+//			
+//			logger.info(">>>>>> server @PostMapping [models/receive] receice data : {}", buffer.toString());
+//			
+//		} catch(Exception e) {
+//			e.getMessage();
+//		}
+//		
+//		return ResponseEntity.ok("Server Receive Succ!!");
+//	}
 
 }
